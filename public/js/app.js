@@ -2386,36 +2386,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a
   },
+  mounted: function mounted() {
+    this.getCollegeList();
+    this.getCourseList();
+  },
   data: function data() {
     return {
-      value: null,
-      options: [{
-        name: "Vue.js",
-        code: "vu"
-      }, {
-        name: "Javascript",
-        code: "js"
-      }, {
-        name: "Open Source",
-        code: "os"
-      }]
+      collegeList: {
+        name: "",
+        code: ""
+      },
+      collegeValue: null,
+      courseValue: null,
+      collegeOptions: [{
+        name: '',
+        code: ''
+      }],
+      courseOptions: []
     };
   },
   methods: {
-    addTag: function addTag(newTag) {
+    addCollegeTag: function addCollegeTag(newTag) {
       var tag = {
         name: newTag,
         code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
       };
-      this.options.push(tag);
-      this.value.push(tag);
+      this.collegeOptions.push(tag);
+      this.collegeValue.push(tag);
+    },
+    addCourseTag: function addCourseTag(newTag) {
+      var tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
+      };
+      this.courseOptions.push(tag);
+      this.courseValue.push(tag);
+    },
+    getCollegeList: function getCollegeList() {
+      var _this = this;
+
+      axios.get("/api/college").then(function (response) {
+        _this.collegeOptions = response.data;
+      });
+    },
+    getCourseList: function getCourseList() {
+      var _this2 = this;
+
+      axios.get('/api/course').then(function (response) {
+        _this2.courseOptions = response.data;
+      });
     }
   }
 });
@@ -39035,7 +39059,6 @@ var render = function() {
                 _vm._v(" "),
                 _c("multiselect", {
                   attrs: {
-                    tagPosition: "bottom",
                     hideSelected: true,
                     "tag-placeholder": "เลือกมหาลัยนี้",
                     placeholder: "กรุณาเลือกมหาลัย",
@@ -39043,17 +39066,17 @@ var render = function() {
                     openDirection: "top",
                     label: "name",
                     "track-by": "code",
-                    options: _vm.options,
+                    options: _vm.collegeOptions,
                     multiple: true,
                     taggable: true
                   },
-                  on: { tag: _vm.addTag },
+                  on: { tag: _vm.addCollegeTag },
                   model: {
-                    value: _vm.value,
+                    value: _vm.collegeValue,
                     callback: function($$v) {
-                      _vm.value = $$v
+                      _vm.collegeValue = $$v
                     },
-                    expression: "value"
+                    expression: "collegeValue"
                   }
                 })
               ],
@@ -39070,25 +39093,24 @@ var render = function() {
                 _vm._v(" "),
                 _c("multiselect", {
                   attrs: {
-                    tagPosition: "bottom",
                     hideSelected: true,
-                    "tag-placeholder": "เลือกมหาลัยนี้",
-                    placeholder: "กรุณาเลือกมหาลัย",
-                    selectLabel: "เลือกมหาลัยนี้",
+                    "tag-placeholder": "เลือกคอร์สเรียนนี้",
+                    placeholder: "กรุณาเลือกคอร์สเรียน",
+                    selectLabel: "เลือกคอร์สเรียนนี้",
                     openDirection: "top",
                     label: "name",
                     "track-by": "code",
-                    options: _vm.options,
+                    options: _vm.courseOptions,
                     multiple: true,
                     taggable: true
                   },
-                  on: { tag: _vm.addTag },
+                  on: { tag: _vm.addCourseTag },
                   model: {
-                    value: _vm.value,
+                    value: _vm.courseValue,
                     callback: function($$v) {
-                      _vm.value = $$v
+                      _vm.courseValue = $$v
                     },
-                    expression: "value"
+                    expression: "courseValue"
                   }
                 })
               ],
@@ -55040,8 +55062,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Hawkeye-PC\Desktop\pmayproject\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Hawkeye-PC\Desktop\pmayproject\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Hawkeye-PC\Desktop\pmayproject\pmayproject\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Hawkeye-PC\Desktop\pmayproject\pmayproject\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -96,8 +96,7 @@
                         <div>
                             <label class="typo__label">มหาลัยทีสนใจ</label>
                             <multiselect
-                                v-model="value"
-                                tagPosition="bottom"
+                                v-model="collegeValue"
                                 :hideSelected="true"
                                 tag-placeholder="เลือกมหาลัยนี้"
                                 placeholder="กรุณาเลือกมหาลัย"
@@ -105,29 +104,28 @@
                                 openDirection="top"
                                 label="name"
                                 track-by="code"
-                                :options="options"
+                                :options="collegeOptions"
                                 :multiple="true"
                                 :taggable="true"
-                                @tag="addTag"
+                                @tag="addCollegeTag"
                             ></multiselect>
                         </div>
 
                         <div class="mt-2">
                             <label class="typo__label">คอร์สเรียนที่สนใจ</label>
                             <multiselect
-                                v-model="value"
-                                tagPosition="bottom"
+                                v-model="courseValue"
                                 :hideSelected="true"
-                                tag-placeholder="เลือกมหาลัยนี้"
-                                placeholder="กรุณาเลือกมหาลัย"
-                                selectLabel="เลือกมหาลัยนี้"
+                                tag-placeholder="เลือกคอร์สเรียนนี้"
+                                placeholder="กรุณาเลือกคอร์สเรียน"
+                                selectLabel="เลือกคอร์สเรียนนี้"
                                 openDirection="top"
                                 label="name"
                                 track-by="code"
-                                :options="options"
+                                :options="courseOptions"
                                 :multiple="true"
                                 :taggable="true"
-                                @tag="addTag"
+                                @tag="addCourseTag"
                             ></multiselect>
                         </div>
 
@@ -151,26 +149,49 @@ export default {
     components: {
         Multiselect
     },
+    mounted() {
+        this.getCollegeList();
+        this.getCourseList();
+    },
     data() {
         return {
-            value: null,
-            options: [
-                { name: "Vue.js", code: "vu" },
-                { name: "Javascript", code: "js" },
-                { name: "Open Source", code: "os" }
-            ]
+            collegeList: { name: "", code: "" },
+            collegeValue: null,
+            courseValue: null,
+            collegeOptions:[{name:'',code:''}],
+            courseOptions:[],
         };
     },
     methods: {
-        addTag(newTag) {
+        addCollegeTag(newTag) {
             const tag = {
                 name: newTag,
                 code:
                     newTag.substring(0, 2) +
                     Math.floor(Math.random() * 10000000)
             };
-            this.options.push(tag);
-            this.value.push(tag);
+            this.collegeOptions.push(tag);
+            this.collegeValue.push(tag);
+        },
+        addCourseTag(newTag) {
+            const tag = {
+                name: newTag,
+                code:
+                    newTag.substring(0, 2) +
+                    Math.floor(Math.random() * 10000000)
+            };
+            this.courseOptions.push(tag);
+            this.courseValue.push(tag);
+        },
+        getCollegeList() {
+            axios.get("/api/college").then(response => {
+                this.collegeOptions=response.data;
+            });
+        },
+        getCourseList() {
+            axios.get('/api/course').then(response=>{
+                this.courseOptions=response.data;
+            });
         }
     }
 };

@@ -40,6 +40,7 @@ class CourseController extends Controller
     {
         $course = new Course;
         $course->name = $request->get('name');
+        $course->code = uniqid();
         $course->save();
 
         $course = Course::all();

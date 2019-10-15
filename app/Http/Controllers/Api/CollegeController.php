@@ -43,6 +43,7 @@ class CollegeController extends Controller
 
         $college = new College;
         $college->name = $request->get('name');
+        $college->code = uniqid();
         $college->save();
 
         $college = College::all();
