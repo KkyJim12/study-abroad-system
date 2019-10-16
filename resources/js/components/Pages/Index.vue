@@ -13,6 +13,7 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="กรุณากรอกชื่อจริง"
+                                v-model="firstname"
                             />
 
                             <small id="emailHelp" class="form-text text-muted"
@@ -26,6 +27,7 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="กรุณากรอกนามสกุล"
+                                v-model="lastname"
                             />
 
                             <small id="emailHelp" class="form-text text-muted"
@@ -39,6 +41,7 @@
                                 type="text"
                                 class="form-control"
                                 placeholder="กรุณากรอกชื่อเล่น"
+                                v-model="nickname"
                             />
 
                             <small id="emailHelp" class="form-text text-muted"
@@ -48,14 +51,22 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">วันเกิด</label>
 
-                            <input type="date" class="form-control" />
+                            <input
+                                v-model="birthday"
+                                type="date"
+                                class="form-control"
+                            />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1"
                                 >วันหมดอายุ Passport</label
                             >
 
-                            <input type="date" class="form-control" />
+                            <input
+                                v-model="passport"
+                                type="date"
+                                class="form-control"
+                            />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">เบอร์โทร</label>
@@ -64,6 +75,7 @@
                                 type="tel"
                                 class="form-control"
                                 placeholder="กรุณากรอกเบอร์โทร"
+                                v-model="tel"
                             />
                         </div>
                         <div class="form-group">
@@ -73,15 +85,17 @@
                                 type="email"
                                 class="form-control"
                                 placeholder="กรุณากรอกอีเมลล์"
+                                v-model="email"
                             />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">GPA</label>
 
                             <input
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 placeholder="กรุณากรอก GPA"
+                                v-model="GPA"
                             />
                         </div>
                         <div class="form-group">
@@ -91,6 +105,7 @@
                                 type="number"
                                 class="form-control"
                                 placeholder="กรุณากรอกคะแนน IELTS"
+                                v-model="IELTS"
                             />
                         </div>
                         <div>
@@ -132,6 +147,7 @@
                         <button
                             type="submit"
                             class="btn btn-primary form-control mt-3"
+                            @click="sendInformation()"
                         >
                             ส่งข้อมูล
                         </button>
@@ -155,11 +171,20 @@ export default {
     },
     data() {
         return {
+            firstname: "",
+            lastname: "",
+            nickname: "",
+            birthday: "",
+            passport: "",
+            tel: "",
+            email: "",
+            GPA: "",
+            IELTS: "",
             collegeList: { name: "", code: "" },
             collegeValue: null,
             courseValue: null,
-            collegeOptions:[{name:'',code:''}],
-            courseOptions:[],
+            collegeOptions: [{ name: "", code: "" }],
+            courseOptions: []
         };
     },
     methods: {
@@ -185,12 +210,30 @@ export default {
         },
         getCollegeList() {
             axios.get("/api/college").then(response => {
-                this.collegeOptions=response.data;
+                this.collegeOptions = response.data;
             });
         },
         getCourseList() {
-            axios.get('/api/course').then(response=>{
-                this.courseOptions=response.data;
+            axios.get("/api/course").then(response => {
+                this.courseOptions = response.data;
+            });
+        },
+        sendInformation() {
+            console.log(this.courseValue);
+            axios.post("/api/member", {
+                firstname:this.firstname,
+                lastname:this.lastname,
+                nickname:this.nickname,
+                birthday:this.birthday,
+                passport:this.passport,
+                tel:this.tel,
+                email:this.email,
+                GPA:this.GPA,
+                IELTS:this.IELTS,
+                college:this.collegeValue,
+                course:this.courseValue
+            }).then(response => {
+                console.log(response.data);
             });
         }
     }
