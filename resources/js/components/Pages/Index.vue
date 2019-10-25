@@ -233,7 +233,17 @@ export default {
                 college:this.collegeValue,
                 course:this.courseValue
             }).then(response => {
-                console.log(response.data);
+                localStorage.login = true;
+                localStorage.id = response.data.id;
+                localStorage.firstname = response.data.firstname;
+                localStorage.lastname = response.data.lastname;
+                localStorage.birthday = response.data.birthday;
+                localStorage.tel = response.data.tel;
+                localStorage.email = response.data.email;
+                localStorage.passport =response.data.passport;
+                localStorage.GPA =response.data.GPA;
+                localStorage.IELTS = response.data.IELTS;
+                this.$router.push('/profile/'+localStorage.id);
             });
         }
     }

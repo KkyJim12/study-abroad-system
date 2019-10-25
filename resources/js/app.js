@@ -27,7 +27,14 @@ Vue.component(
     require("./components/ExampleComponent.vue").default
 );
 Vue.component("index-page", require("./components/Pages/Index.vue").default);
-Vue.component("create-college", require("./components/Components/CreateCollege.vue").default);
+Vue.component(
+    "create-college",
+    require("./components/Components/CreateCollege.vue").default
+);
+Vue.component(
+    "vue-dz",
+    require("./components/Components/Dropzone.vue").default
+);
 
 const routes = [
     {
@@ -35,25 +42,29 @@ const routes = [
         component: require("./components/Pages/Index.vue").default
     },
     {
+        path: "/profile/:id",
+        component: require("./components/Pages/Profile.vue").default
+    },
+    {
         path: "/admin",
-        component: require('./components/Layouts/Admin.vue').default,
+        component: require("./components/Layouts/Admin.vue").default,
         children: [
             {
                 path: "dashboard",
-                component: require('./components/Pages/Dashboard.vue').default
+                component: require("./components/Pages/Dashboard.vue").default
             },
             {
                 path: "student",
-                component: require('./components/Pages/Student.vue').default
+                component: require("./components/Pages/Student.vue").default
             },
             {
                 path: "college",
-                component: require('./components/Pages/College.vue').default
+                component: require("./components/Pages/College.vue").default
             },
             {
                 path: "course",
-                component: require('./components/Pages/Course.vue').default
-            },
+                component: require("./components/Pages/Course.vue").default
+            }
         ]
     }
 ];

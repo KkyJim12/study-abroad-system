@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Member;
 use App\Course;
 use App\MemberCourse;
+use App\Reference;
 
 class MemberController extends Controller
 {
@@ -54,10 +55,14 @@ class MemberController extends Controller
             foreach($request->get('course') as $test) {
                 $course = new MemberCourse;
                 $course->member_id = $member->id;
-                $course->course_id = $test;
+                $course->course_id = $test['id'];
                 $course->save();
             }
         }
+
+        $ref = new Reference;
+        $ref->member_id = $member->id;
+        $ref->save();
 
         return response()->json($member);
     }

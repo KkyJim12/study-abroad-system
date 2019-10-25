@@ -22,3 +22,7 @@ Route::resource('/college','Api\CollegeController');
 Route::resource('/course','Api\CourseController');
 
 Route::resource('/member','Api\MemberController');
+
+Route::post('/image','Api\ImageController@ImageUpload');
+
+Route::post('/ref','Api\ReferenceController@Store');
